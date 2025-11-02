@@ -3,7 +3,7 @@
 Proof-of-Concept. Your robot fren that reacts to changes in Internet Capital Markets using Alphakek Fractal knowledge engine as its 
 brain. Free and open source.
 
-[![CI](https://img.shields.io/github/actions/workflow/status/alphakek-ai/openfren/ci.yml?branch=main)](https://github.com/alphakek-ai/openfren/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/alphakek-ai/openfren/ci.yml?branch=master)](https://github.com/alphakek-ai/openfren/actions)
 [![PyPI](https://img.shields.io/pypi/v/openfren.svg)](https://pypi.org/project/openfren/)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE.md)
 ![Python](https://img.shields.io/badge/python-3.13%20%7C%203.14-blue)
