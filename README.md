@@ -8,12 +8,12 @@ brain. Free and open source.
 
 ### TODO
 
-[ ] Fractal 2 integration
-[ ] Voice commands
-  [ ] Conversation mode
-[ ] Face tracking
-  [ ] Emotion recognition
-  [ ] Face recognition (local, on-device)
+- [ ] Fractal 2 integration
+- [ ] Voice commands
+  - [ ] Conversation mode
+- [ ] Face tracking
+  - [ ] Emotion recognition
+  - [ ] Face recognition (local, on-device)
 
 ### Installation
 Using `uv` (recommended for dev):
