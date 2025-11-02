@@ -28,7 +28,7 @@ When running any Python scripts, first activate the local environment, e.g. `uv 
 ## Language & Syntax
 1. The codebase targets **Python 3.13**.
 2. Prefer modern language features when they improve clarity or safety:
-   • `StrEnum`, `Self`, type-alias declarations (`TypeAlias`),
+   • `StrEnum`, `Self`, type-alias declarations,
    • f-strings with the `key=value` debug shorthand where helpful.
 3. Never use `from __future__ import annotations` - since we use Python 3.13, annotations are always supported.
 4. Never use local imports. Always put imports to the beginning of the file.
@@ -39,7 +39,7 @@ When running any Python scripts, first activate the local environment, e.g. `uv 
    hints. Use `typing`/`collections.abc` generics rather than concrete
    containers (`Sequence[str]` instead of `list[str]` where iteration order is
    irrelevant).
-2. Declare reusable complex types with `TypeAlias`.
+2. Declare reusable complex types with `type`.
 3. When forwarding a self-reference return, prefer `-> Self`.
 4. Always use Pydantic instead of dataclasses.
 5. Never use `# type: ignore` - linter warning almost always means the code is wrong. If unsure, ask user for advice.
