@@ -49,3 +49,30 @@ Publish to PyPI (requires Trusted Publishing set up):
 ```bash
 uv publish
 ```
+
+### Pre-commit hooks
+Install hooks (includes a pre-push pytest hook):
+```bash
+uv run pre-commit install
+uv run pre-commit install --hook-type pre-push
+```
+Run on all files:
+```bash
+uv run pre-commit run --all-files
+```
+Update hooks (optional):
+```bash
+uv run pre-commit autoupdate
+```
+
+### Typing (ty) configuration
+Project configuration lives in `pyproject.toml` under `[tool.ty]`. Source paths and excludes belong in `[tool.ty.src]`:
+```toml
+[tool.ty.src]
+include = ["src", "tests"]
+exclude = [".venv", "dist", "build", "wheels", "*.egg-info", "main.py"]
+```
+Reference: ty configuration docs: https://raw.githubusercontent.com/astral-sh/ty/refs/heads/main/docs/configuration.md
+
+### Ruff tips
+- Prefer `contextlib.suppress(asyncio.TimeoutError)` instead of bare `try`/`except`/`pass` to satisfy `SIM105`.
