@@ -4,7 +4,6 @@ def test_public_api_imports():
         READ_TIMEOUT_S,
         SENTIMENT_SOUNDS,
         SentimentLabel,
-        SentimentState,
         fetch_market_sentiment_async,
         label_from_score,
     )  # type: ignore[attr-defined]

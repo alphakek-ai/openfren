@@ -11,7 +11,6 @@ import httpx
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
-
 # Load environment variables from a .env file if present.
 load_dotenv(".env", override=False)
 
@@ -244,7 +243,7 @@ async def _movement_loop_async(
                 move,
                 initial_goto_duration=initial_goto,
             )
-        except Exception as e:  # noqa: BLE001 - log and continue by design
+        except Exception as e:
             logger.error(f"async_play_move error for {move_name}: {e}")
             logger.error(traceback.format_exc())
             await asyncio.sleep(0.2)
@@ -269,7 +268,7 @@ async def _sentiment_loop_async(
         try:
             # wait with early exit on stop
             await asyncio.wait_for(stop_event.wait(), timeout=POLL_INTERVAL_SECONDS)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             pass
 
 
@@ -292,8 +291,8 @@ async def async_main(*, question: str | None = None) -> None:
     q = question or os.getenv("AIKEK_QUESTION", "crypto market sentiment now, one line")
 
     # Lazy imports to avoid heavy dependencies at import time for library users
-    from reachy_mini import ReachyMini  # noqa: WPS433 - intentional local import
-    from reachy_mini.motion.recorded_move import (  # noqa: WPS433 - intentional local import
+    from reachy_mini import ReachyMini
+    from reachy_mini.motion.recorded_move import (
         RecordedMoves,
     )
 

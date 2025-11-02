@@ -18,13 +18,13 @@ from .app import (
 )
 
 __all__ = [
-    "SentimentLabel",
-    "SentimentState",
-    "label_from_score",
-    "fetch_market_sentiment_async",
     "CONNECT_TIMEOUT_S",
     "READ_TIMEOUT_S",
     "SENTIMENT_SOUNDS",
+    "SentimentLabel",
+    "SentimentState",
+    "fetch_market_sentiment_async",
+    "label_from_score",
 ]
 
 
