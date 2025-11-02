@@ -1,0 +1,77 @@
+---
+alwaysApply: true
+---
+# Think Slow
+When given a task, instead of proceeding to doing it outright, always first carefully read the codebase, then ask the user as many follow-up questions (in a numbered list format) as possible to avoid any miscommunication. After user answered all your questions, suggest a numbered list of 2-5 possible solutions, mention their pros and cons, and let the user choose which one to proceed with. Only after that you can proceed to writing the code.
+
+# Exceptions and Logging
+`except` should always has a detailed logging of what went wrong and where. Silent exceptions are not allowed and should be fixed when encountered.
+
+# Test-Driven Development
+Always (if technically possible) start with writing the tests for the functionality and making the user review them, and only then start to develop the new functionality. The new functionality should satisfy the tests.
+
+# Refactoring and Architecture
+In 95% of cases, the existing codebase has suboptimal architecture: bad coupling, duplicating logic, leaking abstractions, unclear scope, etc. Always ask the user clarifying questions about the business logic. After that, suggest improvements in the architecture that you can make along with solving your primary task. Prefer lightweight functional modules to OOP and hexagonal architecture: the codebase is a startup project with a small team that moves very quickly. Pay extra attention to the code logic - is it possible to achieve the same functionality with the simpler code?
+
+# Document Everything
+Each module should have a README.md file explaining the logic of this particular module. Each time you introduce some changes, make sure you update the module's README accordingly. There's also an DEVELOPMENT.md file in the project root - make sure it's up-to-date as well. Add comments in the code explain what, how and why it works / was decided to work like that.
+
+# Fail Fast, Fail Loud
+You deliberately surface the problem at the first hint of an invalid state—assert, throw, crash—so nothing ambiguous propagates downstream. It’s the opposite of fail-safe/graceful-degradation, and it pairs well with defensive programming and Design-by-Contract but is distinct from them: the key idea is stop now, make the fault unmistakable, and let higher-level recovery or a watchdog deal with it.
+
+# Comments Style
+When editing code, never write the comments of what you just changed. Instead, write a comment as if the developer who's gonna read it sees the code for the first time. Don't reference the previus version, instead explain why and how the current version works.
+
+# Python Environment
+When running any Python scripts, first activate the local environment, e.g. `uv run pytest | cat`.
+
+## Language & Syntax
+1. The codebase targets **Python 3.13**.
+2. Prefer modern language features when they improve clarity or safety:
+   • `StrEnum`, `Self`, type-alias declarations (`TypeAlias`),
+   • f-strings with the `key=value` debug shorthand where helpful.
+3. Never use `from __future__ import annotations` - since we use Python 3.13, annotations are always supported.
+4. Never use local imports. Always put imports to the beginning of the file.
+
+---
+## Type Hints & Pydantic Models
+1. **Every** public function, method, and variable **must** have precise type
+   hints. Use `typing`/`collections.abc` generics rather than concrete
+   containers (`Sequence[str]` instead of `list[str]` where iteration order is
+   irrelevant).
+2. Declare reusable complex types with `TypeAlias`.
+3. When forwarding a self-reference return, prefer `-> Self`.
+4. Always use Pydantic instead of dataclasses.
+5. Never use `# type: ignore` - linter warning almost always means the code is wrong. If unsure, ask user for advice.
+
+---
+## Docstrings
+1. Public API ↔ internal calls: every public symbol (module, class, method,
+   function) requires a docstring in Google or Numpy style.
+2. The assistant should **ask clarifying questions** whenever the expected
+   behaviour, units, or invariants are not obvious.
+
+---
+## Logging & Errors
+1. Use **f-strings** for log & error messages rather than old `%` or `.format`
+   interpolation.
+2. Prefer structured logging fields if the logging backend supports them.
+3. Wrap external calls (DB, network, subprocess) with exception handling that
+   raises domain-specific errors.
+4. If some dependincy is missing, tell that to the user.
+
+---
+## Imports & Organisation
+1. Use imports at the beginning of the file. If you *have* to use local imports for some reason, first ask the confirmation from the user.
+2. Ignore linter errors regarding un-sorted and/or un-formatted imports - they will be automatically fixed by `ruff` in pre-commit hook.
+3. Interfaces go in standalone modules; concrete adapters should import them – not the other way round.
+
+---
+## Testing
+1. All new logic must be accompanied by unit tests (pytest).
+2. Use fixtures and factory helpers instead of inline mocks.
+
+---
+## Misc
+1. `ruff`is being used automatically before every commit. No need to worry about formatting or import ordering.
+2. Optimise for readability first, micro-performance later.

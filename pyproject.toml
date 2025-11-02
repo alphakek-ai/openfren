@@ -1,0 +1,90 @@
+[project]
+name = "openfren"
+version = "0.1.0"
+description = "Your robot fren that reacts to Internet Capital Markets using Alphakek Fractal knowledge engine as its brain."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "httpx==0.28.1",
+    "pydantic==2.12.3",
+    "python-dotenv==1.2.1",
+    "reachy-mini[mujoco]==1.0.0",
+]
+
+# Metadata (fill in placeholders before release)
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "Vladimir Sotnikov", email = "vladimir.s@alphakek.ai" },
+]
+keywords = ["robotics", "ai", "alphakek", "internet capital markets", "reachy-mini"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Environment :: Console",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Games/Entertainment :: Simulation",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+]
+
+[project.urls]
+Homepage = "https://github.com/alphakek-ai/openfren"
+Repository = "https://github.com/alphakek-ai/openfren"
+Issues = "https://github.com/alphakek-ai/openfren/issues"
+
+[project.scripts]
+openfren = "openfren.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest==8.4.2",
+    "ruff==0.14.3",
+    "pre-commit==3.8.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/openfren"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["src", "tests"]
+respect-gitignore = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint]
+select = [
+  "E",  # pycodestyle errors
+  "F",  # pyflakes
+  "W",  # pycodestyle warnings
+  "I",  # isort
+  "UP", # pyupgrade
+  "B",  # bugbear
+  "C4", # comprehensions
+  "SIM",# simplify
+  "RUF",# ruff-specific
+]
+ignore = []
+
+[tool.ty]
+exclude = [".venv", "dist", "build", "wheels", "*.egg-info", "main.py"]
+
+[tool.ty.src]
+include = ["src", "tests"]
+
+[tool.ty.terminal]
+error-on-warning = true
+output-format = "concise"
