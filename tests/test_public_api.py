@@ -17,5 +17,3 @@ def test_public_api_imports():
         SentimentLabel.NEUTRAL,
         SentimentLabel.BEARISH,
     }
-
-

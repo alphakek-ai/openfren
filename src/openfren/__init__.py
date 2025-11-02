@@ -26,5 +26,3 @@ __all__ = [
     "fetch_market_sentiment_async",
     "label_from_score",
 ]
-
-

@@ -1,11 +1,12 @@
 import asyncio
+import contextlib
 import logging
 import os
 import random
 import time
 import traceback
 from enum import StrEnum
-from typing import Any, TypeAlias
+from typing import Any
 
 import httpx
 from dotenv import load_dotenv
@@ -110,8 +111,8 @@ async def fetch_market_sentiment_async(
     return SentimentLabel.NEUTRAL, 0.0
 
 
-MoveName: TypeAlias = str
-SoundName: TypeAlias = str
+MoveName: type = str
+SoundName: type = str
 
 MOVE_MAP: dict[SentimentLabel, list[MoveName]] = {
     # Positive / excited / happy
@@ -223,7 +224,6 @@ async def _movement_loop_async(
         if now >= next_sound_at:
             sound_choices = SENTIMENT_SOUNDS[cur_label]
             sound_file = random.choice(sound_choices)
-            logger.info(f"Playing sound: {sound_file}")
             mini.media.play_sound(sound_file)
             next_sound_at = time.monotonic() + random.uniform(*SOUND_INTERVAL_RANGE_S)
 
@@ -265,11 +265,9 @@ async def _sentiment_loop_async(
         sentiment_state.label = label
         sentiment_state.score = score
         logger.info(f"[sentiment] label={label} score={score:.1f}")
-        try:
-            # wait with early exit on stop
+        # wait with early exit on stop
+        with contextlib.suppress(asyncio.TimeoutError):
             await asyncio.wait_for(stop_event.wait(), timeout=POLL_INTERVAL_SECONDS)
-        except TimeoutError:
-            pass
 
 
 async def async_main(*, question: str | None = None) -> None:
@@ -308,9 +306,7 @@ async def async_main(*, question: str | None = None) -> None:
                 tg.create_task(
                     _movement_loop_async(mini, recorded_moves, stop_event, sentiment_state)
                 )
-                tg.create_task(
-                    _sentiment_loop_async(stop_event, sentiment_state, question=q)
-                )
+                tg.create_task(_sentiment_loop_async(stop_event, sentiment_state, question=q))
                 # Keep running until externally cancelled (Ctrl-C)
                 await asyncio.Event().wait()
         except (asyncio.CancelledError, KeyboardInterrupt):
@@ -326,6 +322,3 @@ def main(question: str | None = None) -> None:
         asyncio.run(async_main(question=question))
     except KeyboardInterrupt:
         logger.info("Interrupted before connection. Exiting...")
-
-
-
