@@ -28,9 +28,7 @@ jobs:
 
       - name: Publish to PyPI (Trusted Publishing)
         run: uv publish
-        env:
-          # No token needed when Trusted Publishing is configured for the project in PyPI
-          UV_PUBLISH_TOKEN: ""
+        # Do not set UV_PUBLISH_TOKEN; uv will use OIDC (Trusted Publishing)
 
       # Note: configure Trusted Publishing in your PyPI project settings to allow this workflow
       # to publish without credentials. See: https://docs.astral.sh/uv/guides/package/#publishing-your-package
