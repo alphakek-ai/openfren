@@ -76,3 +76,25 @@ Reference: ty configuration docs: https://raw.githubusercontent.com/astral-sh/ty
 
 ### Ruff tips
 - Prefer `contextlib.suppress(asyncio.TimeoutError)` instead of bare `try`/`except`/`pass` to satisfy `SIM105`.
+
+### Release checklist
+- Lint, type-check, test:
+  ```bash
+  uv run ruff format && uv run ruff check && uvx ty check && uv run pytest -q
+  ```
+- Bump version and update changelog:
+  ```bash
+  uv version --bump patch  # or: uv version 0.1.1
+  # edit CHANGELOG.md (Unreleased -> new version)
+  ```
+- Commit and push.
+- Create a GitHub release with tag `v<version>` (e.g., `v0.1.1`) and publish it.
+  - The release workflow will build and publish to PyPI via Trusted Publishing.
+
+### Known limitations
+- Requires `AIKEK_API_TOKEN` from `https://app.alphakek.ai`.
+- Motion requires Reachy Mini simulator or hardware; Linux tested, macOS/Windows best‑effort.
+- No offline/mock API mode by design.
+
+### Support / Issues
+- File issues at: https://github.com/alphakek-ai/openfren/issues
