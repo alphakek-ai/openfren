@@ -18,6 +18,7 @@ brain. Free and open source.
 - [ ] Face tracking
   - [ ] Emotion recognition
   - [ ] Face recognition (local, on-device)
+- [ ] Support other robot models
 
 ### Installation
 Using `uv` (recommended for dev):
@@ -38,7 +39,7 @@ pip install openfren
 You may pass environment variables directly or via a `.env` file. See `env.example` for a template.
 
 ### Run
-If you don't have the physical robot yet, first start the simulation:
+If you don't have the physical [Reachy Mini](https://www.pollen-robotics.com/reachy-mini/) robot yet, first start the simulation:
 ```bash
 uv run reachy-mini-daemon --sim --scene minimal
 ```
