@@ -21,14 +21,10 @@ brain. Free and open source.
 - [ ] Support other robot models
 
 ### Installation
-Using `uv` (recommended for dev):
 ```bash
-uv sync
-```
-
-From PyPI (runtime only):
-```bash
-pip install openfren
+git clone https://github.com/alphakek-ai/openfren.git
+cd openfren
+uv sync --dev
 ```
 
 ### Configuration
@@ -39,14 +35,24 @@ pip install openfren
 You may pass environment variables directly or via a `.env` file. See `env.example` for a template.
 
 ### Run
+
 If you don't have the physical [Reachy Mini](https://www.pollen-robotics.com/reachy-mini/) robot yet, first start the simulation:
 ```bash
 uv run reachy-mini-daemon --sim --scene minimal
 ```
+
+> **Note for macOS users:**  
+> On OSX, running the simulator requires using `mjpython` due to Mujoco's integration. See [official instructions](https://mujoco.readthedocs.io/en/stable/python.html#passive-viewer).  
+> To launch the daemon in simulation mode on macOS, run:
+> ```bash
+> mjpython -m reachy_mini.daemon.app.main --sim
+> ```
+
 If you have a robot, just start the daemon:
 ```bash
 uv run reachy-mini-daemon
 ```
+
 Then start Openfren:
 ```bash
 uv run openfren
